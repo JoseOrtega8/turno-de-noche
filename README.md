@@ -4,8 +4,25 @@ Shooter 2D de supervivencia con vista desde arriba, hecho con **Phaser 4** para 
 Marco, empleado del turno nocturno de una gasolinera en el desierto de Sonora, debe aguantar hasta el amanecer.
 
 **Jugar:** https://joseortega8.github.io/turno-de-noche/
-**Tablero de tarjetas:** [URL de GitHub Projects]
-**Documento de diseño (GDD):** [docs/GDD.docx](docs/GDD.docx)
+**Tablero de tarjetas:** https://github.com/users/JoseOrtega8/projects/3
+**Documento de diseño (GDD):** [docs/GDD.pdf](docs/GDD.pdf)
+**Manual de usuario:** [docs/manual-usuario.md](docs/manual-usuario.md) · **Reporte de pruebas beta:** [docs/pruebas-beta.md](docs/pruebas-beta.md)
+
+## Estado: versión beta
+
+Nivel 1 «La gasolinera» completo y jugable: menú, introducción, movimiento y apuntado, llave inglesa y pistola, los tres tipos de infectado, tres oleadas, barriles explosivos, tienda de Doña Lupe, 3 vidas, HUD, puntaje con desglose, pausa, Game Over y Victoria. Los 14 casos del plan de pruebas pasan (ver el reporte).
+
+Pendiente para la versión completa: Nivel 2 (carretera, objetos de misión, escopeta y chaleco) y Nivel 3 (El Trailero).
+
+| Lo que pide la rúbrica | Dónde está en el código |
+|---|---|
+| Eventos | `src/systems/Eventos.js` (nombres) y `src/systems/Oleadas.js` (inicioOleada, finOleada) |
+| Comportamientos | `src/entities/Enemigo.js` y sus subclases `Caminante`, `Corredor`, `Hinchado`; `src/systems/Navegacion.js` |
+| Transacciones | `src/systems/Tienda.js` (valida y después aplica) y `src/scenes/Tienda.js` |
+| Acciones | `src/entities/Jugador.js` (moverse, apuntar, atacar, recargar, botiquín, cambiar arma) |
+| Colisiones | `crearColisiones()` en `src/scenes/Nivel1.js` |
+| Puntaje | `src/systems/Puntaje.js` (fórmula de la sección 4.14 del GDD) |
+| Oportunidades (vidas) | `src/systems/Vidas.js` y `perderVida()` en `Nivel1.js` |
 
 ## Equipo
 
@@ -16,7 +33,7 @@ Marco, empleado del turno nocturno de una gasolinera en el desierto de Sonora, d
 | Jose Carlos Calles Ortega | Sistemas (oleadas, puntaje, vidas, tienda) y documentación |
 | Jose Ramon Ibarra Fontes | Niveles, música, efectos de sonido y pruebas |
 
-Universidad Tecnológica de Hermosillo · Creación de Videojuegos · Maestro: [nombre] · Grupo: [grupo]
+Universidad Tecnológica de Hermosillo · Creación de Videojuegos · Maestro: Iván Chenoweth · Grupo: 10-2
 
 ## Controles
 
@@ -41,20 +58,25 @@ Universidad Tecnológica de Hermosillo · Creación de Videojuegos · Maestro: [
    ```
 3. Abre la carpeta en VS Code y da clic en **Go Live**. No abras `index.html` con doble clic: el juego necesita un servidor local.
 
-Phaser está en `lib/phaser.min.js` con una versión fija (4.2.x). No lo actualices sin acordarlo con el equipo.
+Phaser está en `lib/phaser.min.js` con una versión fija (4.2.1). No lo actualices sin acordarlo con el equipo.
 
 ## Estructura
 
 ```
 index.html
-lib/phaser.min.js
-src/main.js
-src/scenes/    Boot, Menu, Nivel1, Nivel2, Nivel3, Tienda, HUD, GameOver, Victoria
-src/entities/  Jugador, Enemigo, Trailero, Bala
-src/systems/   Oleadas, Puntaje, Vidas, Inventario, Tienda
-assets/        img/ audio/ maps/
-docs/          GDD.docx
+lib/phaser.min.js              Phaser 4.2.1 (versión fija)
+src/main.js                    configuración del juego
+src/config.js                  todos los valores del GDD (vida, daño, precios, oleadas, puntos)
+src/animaciones.js             animaciones por cuadros
+src/scenes/    Boot, Menu, Intro, Nivel1, HUD, Tienda, Pausa, Resultados (GameOver y Victoria)
+src/entities/  Jugador, Enemigo, Caminante, Corredor, Hinchado, Bala, Barril, Recogible
+src/systems/   Oleadas, Puntaje, Vidas, Inventario, Tienda, Navegacion, Audio, Eventos
+assets/        img/ (sprites y tileset) audio/ (OGG y MP3) maps/nivel1.json (Tiled)
+docs/          GDD.pdf, manual-usuario.md, pruebas-beta.md, capturas/
+pruebas/       pruebas_beta.py (casos P-01 a P-14 automatizados)
 ```
+
+Para ver las cajas de colisión abre el juego con `?debug` al final de la URL.
 
 ## Cómo contribuir
 
@@ -67,4 +89,4 @@ docs/          GDD.docx
 ## Créditos
 
 Motor: Phaser 4 (licencia MIT). Mapas: Tiled. Arte: Piskel, GIMP y Krita. Audio: BeepBox, jsfxr y Audacity.
-Arte, música y efectos originales del equipo, salvo lo que se indique en la sección de créditos del GDD.
+Arte, música y efectos originales del equipo. La portada del menú es la Figura 1 del GDD.
